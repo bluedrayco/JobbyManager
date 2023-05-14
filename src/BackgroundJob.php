@@ -2,8 +2,6 @@
 
 namespace Jobby;
 
-use Opis\Closure\SerializableClosure;
-
 class BackgroundJob
 {
     /**

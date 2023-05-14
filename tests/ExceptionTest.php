@@ -13,6 +13,6 @@ class ExceptionTest extends TestCase
     public function testInheritsBaseException()
     {
         $e = new Exception();
-        $this->assertTrue($e instanceof \Exception);
+        $this->assertTrue($e instanceof Exception);
     }
 }

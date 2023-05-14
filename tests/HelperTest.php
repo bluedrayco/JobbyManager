@@ -5,6 +5,8 @@ namespace Jobby\Tests;
 use Jobby\Helper;
 use Jobby\Jobby;
 use PHPUnit\Framework\TestCase;
+use Swift_NullTransport;
+use Swift_Mailer;
 
 /**
  * @coversDefaultClass Jobby\Helper
@@ -292,13 +294,13 @@ class HelperTest extends TestCase
     }
 
     /**
-     * @return \Swift_Mailer
+     * @return Swift_Mailer
      */
     private function getSwiftMailerMock()
     {
-        $nullTransport = new \Swift_NullTransport();
+        $nullTransport = new Swift_NullTransport();
 
-        return $this->createMock(\Swift_Mailer::class);
+        return $this->createMock(Swift_Mailer::class);
     }
 
     /**
