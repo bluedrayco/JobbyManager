@@ -5,11 +5,12 @@ namespace Jobby\Tests;
 use Jobby\Helper;
 use Jobby\Jobby;
 use Opis\Closure\SerializableClosure;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass Jobby\Jobby
  */
-class JobbyTest extends \PHPUnit_Framework_TestCase
+class JobbyTest extends TestCase
 {
     /**
      * @var string

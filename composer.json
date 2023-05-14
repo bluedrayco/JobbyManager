@@ -1,29 +1,25 @@
 {
-  "name": "hellogerard/jobby",
-  "homepage": "https://github.com/jobbyphp/jobby",
+  "name": "tecno-system/jobby",
+  "homepage": "https://github.com/bluedrayco/JobbyManager",
   "license": "MIT",
   "description": "Manage all your cron jobs without modifying crontab. Handles locking, logging, error emails, and more.",
   "authors": [
     {
-      "name": "Gerard Sychay",
-      "email": "hellogerard@gmail.com",
-      "homepage": "https://github.com/hellogerard"
-    },
-    {
-      "name": "Michael Contento",
-      "homepage": "https://github.com/michaelcontento"
+      "name": "Roberto Leroy Monroy Ruiz",
+      "email": "bluedrayco@gmail.com",
+      "homepage": "https://github.com/bluedrayco"
     }
   ],
   "require": {
-    "php": ">=5.6",
-    "dragonmantank/cron-expression": "^3.0",
+    "php": ">=7.0",
+    "dragonmantank/cron-expression": "^2.0|^3.0",
     "opis/closure": "^3.5",
     "swiftmailer/swiftmailer": "^5.4|^6.0",
     "symfony/process": "^2.7|^3.0|^4.0|^5.0"
   },
   "require-dev": {
     "mp091689/dump-die": "^1.0",
-    "phpunit/phpunit": "^4.6",
+    "phpunit/phpunit": "^6.0",
     "symfony/filesystem": "^2.7|^3.0|^4.0|^5.0"
   },
   "autoload": {

@@ -4,11 +4,12 @@ namespace Jobby\Tests;
 
 use Jobby\Helper;
 use Jobby\Jobby;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass Jobby\Helper
  */
-class HelperTest extends \PHPUnit_Framework_TestCase
+class HelperTest extends TestCase
 {
     /**
      * @var Helper
@@ -297,7 +298,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase
     {
         $nullTransport = new \Swift_NullTransport();
 
-        return $this->getMock('Swift_Mailer', [], [$nullTransport]);
+        return $this->createMock(\Swift_Mailer::class);
     }
 
     /**
@@ -306,11 +307,10 @@ class HelperTest extends \PHPUnit_Framework_TestCase
     public function testItReturnsTheCorrectNullSystemDeviceForUnix()
     {
         /** @var Helper $helper */
-        $helper = $this->getMock("\\Jobby\\Helper", ["getPlatform"]);
-        $helper->expects($this->once())
-            ->method("getPlatform")
+        $helper = $this->getMockBuilder(Helper::class)->setMethods(['getPlatform'])->getMock();
+        $helper->expects($this->once())->method("getPlatform")
             ->willReturn(Helper::UNIX);
-
+            
         $this->assertEquals("/dev/null", $helper->getSystemNullDevice());
     }
 
@@ -320,9 +320,8 @@ class HelperTest extends \PHPUnit_Framework_TestCase
     public function testItReturnsTheCorrectNullSystemDeviceForWindows()
     {
         /** @var Helper $helper */
-        $helper = $this->getMock("\\Jobby\\Helper", ["getPlatform"]);
-        $helper->expects($this->once())
-               ->method("getPlatform")
+        $helper = $this->getMockBuilder(Helper::class)->setMethods(['getPlatform'])->getMock();
+        $helper->expects($this->once())->method("getPlatform")
                ->willReturn(Helper::WINDOWS);
 
         $this->assertEquals("NUL", $helper->getSystemNullDevice());

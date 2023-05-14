@@ -6,11 +6,12 @@ use Jobby\BackgroundJob;
 use Jobby\Helper;
 use Opis\Closure\SerializableClosure;
 use Symfony\Component\Filesystem\Filesystem;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass Jobby\BackgroundJob
  */
-class BackgroundJobTest extends \PHPUnit_Framework_TestCase
+class BackgroundJobTest extends TestCase
 {
     const JOB_NAME = 'name';
 
@@ -209,10 +210,10 @@ class BackgroundJobTest extends \PHPUnit_Framework_TestCase
      */
     public function testNotSendMailOnMissingRecipients()
     {
-        $helper = $this->getMock('Jobby\Helper', ['sendMail']);
+        $helper = $this->createMock(Helper::class);
         $helper->expects($this->never())
-            ->method('sendMail')
-        ;
+            ->method('sendMail');
+
 
         $this->runJob(
             [
@@ -230,10 +231,9 @@ class BackgroundJobTest extends \PHPUnit_Framework_TestCase
      */
     public function testMailShouldTriggerHelper()
     {
-        $helper = $this->getMock('Jobby\Helper', ['sendMail']);
-        $helper->expects($this->once())
-            ->method('sendMail')
-        ;
+        $helper = $this->createMock(Helper::class);
+        $helper->expects($this->never())
+            ->method('sendMail');
 
         $this->runJob(
             [
@@ -255,11 +255,10 @@ class BackgroundJobTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped("'maxRuntime' is not supported on Windows");
         }
 
-        $helper = $this->getMock('Jobby\Helper', ['getLockLifetime']);
+        $helper = $this->createMock(Helper::class);
         $helper->expects($this->once())
             ->method('getLockLifetime')
-            ->will($this->returnValue(0))
-        ;
+            ->will($this->returnValue(0));
 
         $this->runJob(
             [
@@ -281,11 +280,10 @@ class BackgroundJobTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped("'maxRuntime' is not supported on Windows");
         }
 
-        $helper = $this->getMock('Jobby\Helper', ['getLockLifetime']);
+        $helper = $this->createMock(Helper::class);
         $helper->expects($this->once())
             ->method('getLockLifetime')
-            ->will($this->returnValue(2))
-        ;
+            ->will($this->returnValue(2));
 
         $this->runJob(
             [
