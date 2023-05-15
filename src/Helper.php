@@ -48,13 +48,19 @@ class Helper
     public function sendMail($job, array $config, $message)
     {
         $host = $this->getHost();
+        $date = date('d-m-y h:i:s');
         $body = <<<EOF
-$message
-
-You can find its output in {$config['output']} on $host.
-
-Best,
-jobby@$host
+{$job} Had an error:
+- DateTime:
+    {$date}
+- Schedule:
+    {$config['schedule']}
+- Error:
+    {$message}
+- Log: 
+    {$config['output']}
+- Host:
+    $host
 EOF;
         $mail = new Swift_Message();
         $mail->setTo(explode(',', $config['recipients']));
@@ -67,6 +73,69 @@ EOF;
         $mailer->send($mail);
 
         return $mail;
+    }
+
+    /**
+     * @param string $job
+     * @param array  $config
+     * @param string $message
+     *
+     * @return void
+     */
+    public function sendSlackAlert($job, array $config, $message)
+    {
+        $host = $this->getHost();
+        $date = date('d-m-y h:i:s');
+        $body = <<<EOF
+:x:*{$job}* Had an error:
+- DateTime:
+    {$date}
+- Schedule:
+    {$config['schedule']}
+- Error:
+    {$message}
+- Log: 
+    {$config['output']}
+- Host:
+    $host
+EOF;
+        $client = new Client($config['slackUrl']);
+        $client->to($config['slackChannel']);
+        if($config['slackSender']){
+            $client->from($config['slackSender']);
+        }
+        $client->send($body);
+
+    }
+
+    /**
+     * @param string $job
+     * @param array  $config
+     * @param string $message
+     *
+     * @return void
+     */
+    public function sendMattermostAlert($job, array $config, $message)
+    {
+        $host = $this->getHost();
+        $date = date('d-m-y h:i:s');
+        $body = <<<EOF
+:x:*{$job}* Had an error:
+- DateTime:
+    {$date}
+- Schedule:
+    {$config['schedule']}
+- Error:
+    {$message}
+- Log: 
+    {$config['output']}
+- Host:
+    $host
+EOF;
+        $payload = ['text'=>$body];
+        $encoded = json_encode($payload, JSON_UNESCAPED_UNICODE);
+        $this->guzzle->post($config['mattermostUrl'], ['body' => $encoded]);
+
     }
 
     /**
@@ -255,53 +324,5 @@ EOF;
             return '/dev/null';
         }
         return 'NUL';
-    }
-
-
-    /**
-     * @param string $job
-     * @param array  $config
-     * @param string $message
-     *
-     * @return void
-     */
-    public function sendSlackAlert($job, array $config, $message)
-    {
-        $host = $this->getHost();
-        $body = <<<EOF
-$message
-You can find its output in {$config['output']} on $host.
-Best,
-jobby@$host
-EOF;
-        $client = new Client($config['slackUrl']);
-        $client->to($config['slackChannel']);
-        if($config['slackSender']){
-            $client->from($config['slackSender']);
-        }
-        $client->send($body);
-
-    }
-
-    /**
-     * @param string $job
-     * @param array  $config
-     * @param string $message
-     *
-     * @return void
-     */
-    public function sendMattermostAlert($job, array $config, $message)
-    {
-        $host = $this->getHost();
-        $body = <<<EOF
-$message
-You can find its output in {$config['output']} on $host.
-Best,
-jobby@$host
-EOF;
-        $payload = ['text'=>$body];
-        $encoded = json_encode($payload, JSON_UNESCAPED_UNICODE);
-        $this->guzzle->post($config['mattermostUrl'], ['body' => $encoded]);
-
     }
 }
