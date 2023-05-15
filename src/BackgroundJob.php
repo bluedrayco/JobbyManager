@@ -1,6 +1,7 @@
 <?php
 
 namespace Jobby;
+use Laravel\SerializableClosure\SerializableClosure;
 
 class BackgroundJob
 {
@@ -214,6 +215,9 @@ class BackgroundJob
         }
 
         $host = $this->helper->getHost();
+        if(!$host){
+            return false;
+        }
         if (strcasecmp($this->config['runOnHost'], $host) != 0) {
             return false;
         }

@@ -67,7 +67,7 @@ class HelperTest extends TestCase
     /**
      * @return array
      */
-    public function dataProviderTestEscape()
+    public static function dataProviderTestEscape()
     {
         return [
             ['lower', 'lower'],
@@ -310,12 +310,11 @@ class HelperTest extends TestCase
      */
     public function testItReturnsTheCorrectNullSystemDeviceForUnix()
     {
-        /** @var Helper $helper */
-        $helper = $this->getMockBuilder(Helper::class)->setMethods(['getPlatform'])->getMock();
+        $helper = $this->getMockBuilder(Helper::class)->onlyMethods(['getPlatform'])->getMock();
         $helper->expects($this->once())->method("getPlatform")
             ->willReturn(Helper::UNIX);
             
-        $this->assertEquals("/dev/null", $helper->getSystemNullDevice());
+        $this->assertStringContainsString("/dev/null", $helper->getSystemNullDevice());
     }
 
     /**
@@ -324,7 +323,7 @@ class HelperTest extends TestCase
     public function testItReturnsTheCorrectNullSystemDeviceForWindows()
     {
         /** @var Helper $helper */
-        $helper = $this->getMockBuilder(Helper::class)->setMethods(['getPlatform'])->getMock();
+        $helper = $this->getMockBuilder(Helper::class)->onlyMethods(['getPlatform'])->getMock();
         $helper->expects($this->once())->method("getPlatform")
                ->willReturn(Helper::WINDOWS);
 

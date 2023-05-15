@@ -4,7 +4,7 @@ namespace Jobby\Tests;
 
 use Jobby\BackgroundJob;
 use Jobby\Helper;
-use Opis\Closure\SerializableClosure;
+use Laravel\SerializableClosure\SerializableClosure;
 use Symfony\Component\Filesystem\Filesystem;
 use PHPUnit\Framework\TestCase;
 
@@ -48,7 +48,7 @@ class BackgroundJobTest extends TestCase
         }
     }
 
-    public function runProvider()
+    public static function runProvider()
     {
         $echo = function () {
             echo 'test';
@@ -336,7 +336,7 @@ class BackgroundJobTest extends TestCase
         $this->assertEquals($jobRuns, is_string($content) && !empty($content));
     }
 
-    public function haltDirProvider()
+    public static function haltDirProvider()
     {
         return [
             [true, false],
