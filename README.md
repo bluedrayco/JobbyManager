@@ -222,7 +222,10 @@ slackUrl       | string    | null                                | The webhook u
 slackSender    | string    | null                                | The name used in the from field for Slack
 
 ## Credits ##
-
 Developed before, but since inspired by [whenever](<https://github.com/javan/whenever>).
 
+## Support this project ##
 [Support this project](https://bmc.link/bluedrayco)
+
+## Special Thanks
+For my love *Ana Belen Cruz* who always believes in me and encourages me to be better every day.
