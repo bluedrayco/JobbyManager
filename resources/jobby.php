@@ -5,10 +5,10 @@
 //
 // * * * * * cd /path/to/project && php jobby.php 1>> /dev/null 2>&1
 //
+require_once __DIR__ . '/vendor/autoload.php';
+use Jobby\Jobby;
 
-require_once __DIR__ . '/../vendor/autoload.php';
-
-$jobby = new \Jobby\Jobby();
+$jobby = new Jobby();
 
 $jobby->add('CommandExample', array(
     'command' => 'ls',

@@ -1,13 +1,13 @@
 # Jobby, a PHP cron job manager #
-[![Total Downloads](https://img.shields.io/packagist/dt/hellogerard/jobby.svg)](https://packagist.org/packages/hellogerard/jobby)
-[![Latest Version](https://img.shields.io/packagist/v/hellogerard/jobby.svg)](https://packagist.org/packages/hellogerard/jobby)
-[![Build Status](https://img.shields.io/travis/jobbyphp/jobby.svg)](https://travis-ci.org/jobbyphp/jobby)
-[![MIT License](https://img.shields.io/packagist/l/hellogerard/jobby.svg)](https://github.com/jobbyphp/jobby/blob/master/LICENSE)
+[![Total Downloads](https://img.shields.io/packagist/dt/tecno-system/jobby-manager.svg)](https://packagist.org/packages/tecno-system/jobby-manager)
+[![Latest Version](https://img.shields.io/packagist/v/tecno-system/jobby-manager.svg)](https://packagist.org/packages/tecno-system/jobby-manager)
+[![Build Status](https://img.shields.io/travis/tecno-system/jobby-manager.svg)](https://travis-ci.org/tecno-system/jobby-manager)
+[![MIT License](https://img.shields.io/packagist/l/tecno-system/jobby-manager.svg)](https://github.com/bluedrayco/JobbyManager/blob/master/LICENSE)
 
 Install the master jobby cron job, and it will manage all your offline tasks. Add jobs without modifying crontab.
 Jobby can handle logging, locking, error emails and more.
 
-**NEW REPO:** We have moved `jobby` to a Github org. Please update your remotes to `https://github.com/jobbyphp/jobby.git`.
+**NEW REPO:** We have moved `jobby` to a Github org. Please update your remotes to `https://github.com/bluedrayco/JobbyManager.git`.
 
 ## Features ##
 
@@ -36,7 +36,7 @@ Then add the following line to your (or whomever's) crontab:
 
 After Jobby installs, you can copy an example file to the project root.
 ```
-$ cp vendor/hellogerard/jobby/resources/jobby.php .
+$ cp vendor/tecno-system/jobby-manager/resources/jobby.php .
 ```
 
 ### Running a job ###
@@ -224,4 +224,4 @@ Symfony bundle for Jobby - [imper86/jobby-cron-bundle](https://github.com/imper8
 
 Developed before, but since inspired by [whenever](<https://github.com/javan/whenever>).
 
-[Support this project](https://cash.me/$hellogerard)
+[Support this project](https://bmc.link/bluedrayco)

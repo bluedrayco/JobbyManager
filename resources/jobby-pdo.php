@@ -9,12 +9,10 @@
 //
 // * * * * * cd /path/to/project && php jobby-pdo.php 1>> /dev/null 2>&1
 //
-
+require_once __DIR__ . '/vendor/autoload.php';
 use Jobby\Jobby;
 use Opis\Closure\SerializableClosure;
 use Jobby\Exception;
-
-require_once __DIR__ . '/../vendor/autoload.php';
 
 // The table, which shall contain the cronjob-configuration(s).
 $dbhJobbiesTableName = 'jobbies';

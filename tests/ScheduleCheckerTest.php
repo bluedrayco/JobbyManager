@@ -26,7 +26,7 @@ class ScheduleCheckerTest extends TestCase
     /**
      * @return void
      */
-    public function test_it_can_detect_a_due_job_from_a_datetime_string()
+    public function testItCanDetectADueJobFromADatetimeString()
     {
         $this->assertTrue($this->scheduleChecker->isDue(date('Y-m-d H:i:s')));
     }
@@ -34,7 +34,7 @@ class ScheduleCheckerTest extends TestCase
     /**
      * @return void
      */
-    public function test_it_can_detect_if_a_job_is_due_with_a_passed_in_DateTimeImmutable()
+    public function testItCanDetectIfAJobIsDueWithAPassedInDateTimeInmutable()
     {
         $scheduleChecker = new ScheduleChecker(new DateTimeImmutable("2017-01-02 13:14:59"));
 
