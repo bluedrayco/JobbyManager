@@ -36,7 +36,7 @@ class HelperTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->helper = new Helper();
         $this->tmpDir = $this->helper->getTempDir();
@@ -47,7 +47,7 @@ class HelperTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         unset($_SERVER['APPLICATION_ENV']);
     }
@@ -186,19 +186,19 @@ class HelperTest extends TestCase
 
     /**
      * @covers ::releaseLock
-     * @expectedException \Jobby\Exception
      */
     public function testReleaseNonExistin()
     {
+        $this->expectException(\Jobby\Exception::class);
         $this->helper->releaseLock($this->lockFile);
     }
 
     /**
      * @covers ::acquireLock
-     * @expectedException \Jobby\InfoException
      */
     public function testExceptionIfAquireFails()
     {
+        $this->expectException(\Jobby\InfoException::class);
         $fh = fopen($this->lockFile, 'r+');
         $this->assertTrue(is_resource($fh));
 
@@ -210,10 +210,10 @@ class HelperTest extends TestCase
 
     /**
      * @covers ::acquireLock
-     * @expectedException \Jobby\Exception
      */
     public function testAquireLockShouldFailOnSecondTry()
     {
+        $this->expectException(\Jobby\Exception::class);
         $this->helper->acquireLock($this->lockFile);
         $this->helper->acquireLock($this->lockFile);
     }
@@ -285,14 +285,14 @@ class HelperTest extends TestCase
 
         $host = $helper->getHost();
         $email = "jobby@$host";
-        $this->assertContains('job', $mail->getSubject());
-        $this->assertContains("[$host]", $mail->getSubject());
+        $this->assertStringContainsString('job', $mail->getSubject());
+        $this->assertStringContainsString("[$host]", $mail->getSubject());
         $this->assertEquals(1, count($mail->getFrom()));
         $this->assertEquals('jobby', current($mail->getFrom()));
         $this->assertEquals($email, current(array_keys($mail->getFrom())));
         $this->assertEquals($email, current(array_keys($mail->getSender())));
-        $this->assertContains($config['output'], $mail->getBody());
-        $this->assertContains('message', $mail->getBody());
+        $this->assertStringContainsString($config['output'], $mail->getBody());
+        $this->assertStringContainsString('message', $mail->getBody());
     }
 
     /**

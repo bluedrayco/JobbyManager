@@ -25,7 +25,7 @@ class JobbyTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->logFile = __DIR__ . '/_files/JobbyTest.log';
         if (file_exists($this->logFile)) {
@@ -38,7 +38,7 @@ class JobbyTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (file_exists($this->logFile)) {
             unlink($this->logFile);
@@ -189,8 +189,8 @@ class JobbyTest extends TestCase
         // Job runs asynchronously, so wait a bit
         sleep($this->getSleepTime());
 
-        $this->assertContains('job-1', $this->getLogContent());
-        $this->assertContains('job-2', $this->getLogContent());
+        $this->assertStringContainsString('job-1', $this->getLogContent());
+        $this->assertStringContainsString('job-2', $this->getLogContent());
     }
 
     /**
@@ -281,10 +281,10 @@ class JobbyTest extends TestCase
 
     /**
      * @covers ::add
-     * @expectedException \Jobby\Exception
      */
     public function testExceptionOnMissingJobOptionCommand()
     {
+        $this->expectException(\Jobby\Exception::class);
         $jobby = new Jobby();
 
         $jobby->add(
@@ -297,10 +297,10 @@ class JobbyTest extends TestCase
 
     /**
      * @covers ::add
-     * @expectedException \Jobby\Exception
      */
     public function testExceptionOnMissingJobOptionSchedule()
     {
+        $this->expectException(\Jobby\Exception::class);
         $jobby = new Jobby();
 
         $jobby->add(
@@ -359,7 +359,7 @@ class JobbyTest extends TestCase
         $jobby->run();
         sleep(2);
 
-        $this->assertContains('ERROR: MaxRuntime of 1 secs exceeded!', $this->getLogContent());
+        $this->assertStringContainsString('ERROR: MaxRuntime of 1 secs exceeded!', $this->getLogContent());
     }
 
     /**

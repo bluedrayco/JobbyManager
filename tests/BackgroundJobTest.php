@@ -28,7 +28,7 @@ class BackgroundJobTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->logFile = __DIR__ . '/_files/BackgroundJobTest.log';
         if (file_exists($this->logFile)) {
@@ -41,7 +41,7 @@ class BackgroundJobTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (file_exists($this->logFile)) {
             unlink($this->logFile);
@@ -76,7 +76,7 @@ class BackgroundJobTest extends TestCase
     public function testGetConfig()
     {
         $job = new BackgroundJob('test job',[]);
-        $this->assertInternalType('array',$job->getConfig());
+        $this->assertIsArray($job->getConfig());
     }
 
     /**
@@ -101,16 +101,16 @@ class BackgroundJobTest extends TestCase
     {
         $this->runJob(['command' => 'invalid-command']);
 
-        $this->assertContains('invalid-command', $this->getLogContent());
+        $this->assertStringContainsString('invalid-command', $this->getLogContent());
 
         if ($this->helper->getPlatform() === Helper::UNIX) {
-            $this->assertContains('not found', $this->getLogContent());
-            $this->assertContains(
+            $this->assertStringContainsString('not found', $this->getLogContent());
+            $this->assertStringContainsString(
                 "ERROR: Job exited with status '127'",
                 $this->getLogContent()
             );
         } else {
-            $this->assertContains(
+            $this->assertStringContainsString(
                 'not recognized as an internal or external command',
                 $this->getLogContent()
             );
@@ -130,7 +130,7 @@ class BackgroundJobTest extends TestCase
             ]
         );
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             'ERROR: Closure did not return true! Returned:',
             $this->getLogContent()
         );
@@ -197,8 +197,8 @@ class BackgroundJobTest extends TestCase
             ]
         );
 
-        $this->assertContains('stdout output', @file_get_contents($stdout));
-        $this->assertContains('stderr output', @file_get_contents($stderr));
+        $this->assertStringContainsString('stdout output', @file_get_contents($stdout));
+        $this->assertStringContainsString('stderr output', @file_get_contents($stderr));
 
         unlink($stderr);
         unlink($stdout);
@@ -293,7 +293,7 @@ class BackgroundJobTest extends TestCase
             $helper
         );
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             'MaxRuntime of 1 secs exceeded! Current runtime: 2 secs',
             $this->getLogContent()
         );
