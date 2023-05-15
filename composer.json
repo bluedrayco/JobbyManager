@@ -13,6 +13,7 @@
   "require": {
     "php": ">=7.0",
     "dragonmantank/cron-expression": "^2.0",
+    "maknz/slack": "^1.7",
     "opis/closure": "^3.5",
     "swiftmailer/swiftmailer": "^6.0",
     "symfony/process": "^3.0"

@@ -26,7 +26,7 @@ Jobby can handle logging, locking, error emails and more.
 
 The recommended way to install Jobby is through [Composer](http://getcomposer.org):
 ```
-$ composer require hellogerard/jobby
+$ composer require tecno-system/jobby-manager
 ```
 
 Then add the following line to your (or whomever's) crontab:
@@ -215,10 +215,11 @@ smtpPassword   | string    | null                                | SMTP password
 smtpSecurity   | string    | null                                | SMTP security option: _ssl_ or _tls_, if `mailer` is smtp
 smtpSender     | string    | jobby@&lt;hostname&gt;              | The sender and from addresses used in SMTP notices
 smtpSenderName | string    | Jobby                               | The name used in the from field for SMTP messages
-
-## Symfony integration ##
-
-Symfony bundle for Jobby - [imper86/jobby-cron-bundle](https://github.com/imper86/jobby-cron-bundle)
+_**Notifications**_  |           |                                     | _**Options for sending Alerts when errors**_
+mattermostUrl  | string    | null                                | The webhook url from Mattermost
+slackChannel   | string    | null                                | The name of Slack Channel (#channel)
+slackUrl       | string    | null                                | The webhook url from Slack
+slackSender    | string    | null                                | The name used in the from field for Slack
 
 ## Credits ##
 

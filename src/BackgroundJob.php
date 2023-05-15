@@ -53,6 +53,11 @@ class BackgroundJob
             'enabled'        => null,
             'haltDir'        => null,
             'debug'          => null,
+            'mattermostUrl'  => null,
+            'slackChannel'   => null,
+            'slackUrl'       => null,
+            'slackSender'    => null,
+            'mailSubject'    => null,
         ];
 
         $this->config['output_stdout'] = $this->config['output_stdout'] === null ? $this->config['output'] : $this->config['output_stdout'];
@@ -71,7 +76,7 @@ class BackgroundJob
             $this->checkMaxRuntime($lockFile);
         } catch (Exception $e) {
             $this->log('ERROR: ' . $e->getMessage(), 'stderr');
-            $this->mail($e->getMessage());
+            $this->notify($e->getMessage());
 
             return;
         }
@@ -94,7 +99,7 @@ class BackgroundJob
             $this->log('INFO: ' . $e->getMessage(), 'stderr');
         } catch (Exception $e) {
             $this->log('ERROR: ' . $e->getMessage(), 'stderr');
-            $this->mail($e->getMessage());
+            $this->notify($e->getMessage());
         }
 
         if ($lockAcquired) {
@@ -102,7 +107,7 @@ class BackgroundJob
 
             // remove log file if empty
             $logfile = $this->getLogfile();
-            if (is_file($logfile) && filesize($logfile) <= 0) {
+            if (is_file($logfile) && (filesize($logfile) <= 2 || file_get_contents($logfile) == "[]")) {
                 unlink($logfile);
             }
         }
@@ -237,14 +242,16 @@ class BackgroundJob
         try {
             $retval = $command();
         } catch (\Throwable $e) {
-            if ($logfile = $this->getLogfile('stderr')) {
+            if ($this->getLogfile('stderr')) {
                 file_put_contents($this->getLogfile('stderr'), "Error! " . $e->getMessage() . "\n", FILE_APPEND);
             }
             $retval = $e->getMessage();
         }
         $content = ob_get_contents();
-        if ($logfile = $this->getLogfile()) {
-            file_put_contents($this->getLogfile(), $content, FILE_APPEND);
+        if ($this->getLogfile()) {
+            if(strlen($content) > 2){
+                file_put_contents($this->getLogfile(), $content, FILE_APPEND);
+            }
         }
         ob_end_clean();
 
@@ -283,5 +290,38 @@ class BackgroundJob
         if ($retval !== 0) {
             throw new Exception("Job exited with status '$retval'.");
         }
+    }
+
+
+    /**
+     * @param string $message
+     */
+    protected function notify($message)
+    {
+        if (!empty($this->config['recipients'])) {
+            $this->helper->sendMail(
+                $this->job,
+                $this->config,
+                $message
+            );
+        }
+
+        if (!empty($this->config['mattermostUrl'])) {
+            $this->helper->sendMattermostAlert(
+                $this->job,
+                $this->config,
+                $message
+            );
+        }
+
+        if (!empty($this->config['slackChannel']) && !empty($this->config['slackUrl'])) {
+            $this->helper->sendSlackAlert(
+                $this->job,
+                $this->config,
+                $message
+            );
+        }
+
+
     }
 }

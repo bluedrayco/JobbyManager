@@ -106,6 +106,7 @@ class HelperTest extends TestCase
         $this->helper->releaseLock($this->lockFile);
         $this->helper->acquireLock($this->lockFile);
         $this->helper->releaseLock($this->lockFile);
+        $this->assertTrue(true);
     }
 
     /**

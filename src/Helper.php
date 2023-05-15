@@ -6,6 +6,7 @@ use Swift_SmtpTransport;
 use Swift_MailTransport;
 use Swift_SendmailTransport;
 use Swift;
+use Maknz\Slack\Client;
 
 class Helper
 {
@@ -254,5 +255,53 @@ EOF;
             return '/dev/null';
         }
         return 'NUL';
+    }
+
+
+    /**
+     * @param string $job
+     * @param array  $config
+     * @param string $message
+     *
+     * @return void
+     */
+    public function sendSlackAlert($job, array $config, $message)
+    {
+        $host = $this->getHost();
+        $body = <<<EOF
+$message
+You can find its output in {$config['output']} on $host.
+Best,
+jobby@$host
+EOF;
+        $client = new Client($config['slackUrl']);
+        $client->to($config['slackChannel']);
+        if($config['slackSender']){
+            $client->from($config['slackSender']);
+        }
+        $client->send($body);
+
+    }
+
+    /**
+     * @param string $job
+     * @param array  $config
+     * @param string $message
+     *
+     * @return void
+     */
+    public function sendMattermostAlert($job, array $config, $message)
+    {
+        $host = $this->getHost();
+        $body = <<<EOF
+$message
+You can find its output in {$config['output']} on $host.
+Best,
+jobby@$host
+EOF;
+        $payload = ['text'=>$body];
+        $encoded = json_encode($payload, JSON_UNESCAPED_UNICODE);
+        $this->guzzle->post($config['mattermostUrl'], ['body' => $encoded]);
+
     }
 }
