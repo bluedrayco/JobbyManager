@@ -278,6 +278,7 @@ class HelperTest extends TestCase
         $config = $jobby->getDefaultConfig();
         $config['output'] = 'output message';
         $config['recipients'] = 'a@a.com,b@b.com';
+        $config['schedule'] = '* * * * *';
 
         $helper = new Helper($mailer);
         $mail = $helper->sendMail('job', $config, 'message');
