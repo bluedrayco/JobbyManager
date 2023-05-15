@@ -1,5 +1,7 @@
 <?php
+
 namespace Jobby;
+
 use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
@@ -13,12 +15,12 @@ class Helper
     /**
      * @var int
      */
-    const UNIX = 0;
+    public const UNIX = 0;
 
     /**
      * @var int
      */
-    const WINDOWS = 1;
+    public const WINDOWS = 1;
 
     /**
      * @var resource[]
@@ -101,7 +103,7 @@ EOF;
 EOF;
         $client = new Client($config['slackUrl']);
         $client->to($config['slackChannel']);
-        if($config['slackSender']){
+        if($config['slackSender']) {
             $client->from($config['slackSender']);
         }
         $client->send($body);

@@ -31,7 +31,7 @@ class JobbyTest extends TestCase
         if (file_exists($this->logFile)) {
             unlink($this->logFile);
         }
-        
+
         $this->helper = new Helper();
     }
 
@@ -258,8 +258,8 @@ class JobbyTest extends TestCase
     public function testGetJobs()
     {
         $jobby = new Jobby();
-        $this->assertCount(0,$jobby->getJobs());
-        
+        $this->assertCount(0, $jobby->getJobs());
+
         $jobby->add(
             'test job1',
             [
@@ -276,7 +276,7 @@ class JobbyTest extends TestCase
             ]
         );
 
-        $this->assertCount(2,$jobby->getJobs());
+        $this->assertCount(2, $jobby->getJobs());
     }
 
     /**

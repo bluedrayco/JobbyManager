@@ -83,7 +83,7 @@ class ScheduleCheckerTest extends TestCase
     public function testItCanUseAClosureToDetectADueJob()
     {
         $this->assertTrue(
-            $this->scheduleChecker->isDue(function() {
+            $this->scheduleChecker->isDue(function () {
                 return true;
             })
         );
@@ -95,7 +95,7 @@ class ScheduleCheckerTest extends TestCase
     public function testItCanUseAClosureToDetectANonDueJob()
     {
         $this->assertFalse(
-            $this->scheduleChecker->isDue(function() {
+            $this->scheduleChecker->isDue(function () {
                 return false;
             })
         );

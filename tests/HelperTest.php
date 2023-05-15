@@ -313,7 +313,7 @@ class HelperTest extends TestCase
         $helper = $this->getMockBuilder(Helper::class)->onlyMethods(['getPlatform'])->getMock();
         $helper->expects($this->once())->method("getPlatform")
             ->willReturn(Helper::UNIX);
-            
+
         $this->assertStringContainsString("/dev/null", $helper->getSystemNullDevice());
     }
 

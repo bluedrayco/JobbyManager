@@ -1,6 +1,7 @@
 <?php
 
 namespace Jobby;
+
 use Laravel\SerializableClosure\SerializableClosure;
 
 class BackgroundJob
@@ -215,7 +216,7 @@ class BackgroundJob
         }
 
         $host = $this->helper->getHost();
-        if(!$host){
+        if(!$host) {
             return false;
         }
         if (strcasecmp($this->config['runOnHost'], $host) != 0) {
@@ -253,7 +254,7 @@ class BackgroundJob
         }
         $content = ob_get_contents();
         if ($this->getLogfile()) {
-            if(strlen($content) > 2){
+            if(strlen($content) > 2) {
                 file_put_contents($this->getLogfile(), $content, FILE_APPEND);
             }
         }

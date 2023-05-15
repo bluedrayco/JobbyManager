@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  */
 class BackgroundJobTest extends TestCase
 {
-    const JOB_NAME = 'name';
+    public const JOB_NAME = 'name';
 
     /**
      * @var string
@@ -75,7 +75,7 @@ class BackgroundJobTest extends TestCase
      */
     public function testGetConfig()
     {
-        $job = new BackgroundJob('test job',[]);
+        $job = new BackgroundJob('test job', []);
         $this->assertIsArray($job->getConfig());
     }
 
