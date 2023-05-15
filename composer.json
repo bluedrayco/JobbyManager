@@ -16,12 +16,12 @@
     "maknz/slack": "^1.7",
     "laravel/serializable-closure": "^1.3",
     "swiftmailer/swiftmailer": "^6.0",
-    "symfony/process": "^3.0|^4.4|^5.4|^6.0"
+    "symfony/process": "^3.0|^4.4|^5.4|^6.0|^6.2"
   },
   "require-dev": {
     "mp091689/dump-die": "^1.0",
     "phpunit/phpunit": "^6.0|^7.5|^8.5|^9.6|^10.1",
-    "symfony/filesystem": "^3.0|^4.4|^5.4|^6.0"
+    "symfony/filesystem": "^3.0|^4.4|^5.4|^6.0|^6.2"
   },
   "autoload": {
     "psr-4": {
